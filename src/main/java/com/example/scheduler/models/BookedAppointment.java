@@ -19,8 +19,8 @@ public class BookedAppointment {
     private String description;
     private String start_time;
     private String end_time;
+    private String date;
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
 
@@ -63,5 +63,13 @@ public class BookedAppointment {
 
     public void setEnd_time(String end_time) {
         this.end_time = end_time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
