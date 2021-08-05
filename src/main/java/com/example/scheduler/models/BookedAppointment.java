@@ -1,5 +1,8 @@
 package com.example.scheduler.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,11 +15,14 @@ public class BookedAppointment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String description;
+    private String start_time;
+    private String end_time;
     @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
-    @OneToOne
-    @JoinColumn(name="appointment_id")
-    private Appointment appointment;
+
 
 
     public Long getId() {
@@ -27,20 +33,35 @@ public class BookedAppointment {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
-    public Appointment getAppointment() {
-        return appointment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
     }
 }

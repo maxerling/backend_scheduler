@@ -1,5 +1,8 @@
 package com.example.scheduler.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +19,8 @@ public class User {
     private String password;
     private String first_name;
     private String last_name;
+    private String role;
+    private boolean active;
     @OneToMany(mappedBy = "user")
     private List<BookedAppointment> bookedAppointments;
 
@@ -65,5 +70,21 @@ public class User {
 
     public void setBookedAppointments(List<BookedAppointment> bookedAppointments) {
         this.bookedAppointments = bookedAppointments;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
