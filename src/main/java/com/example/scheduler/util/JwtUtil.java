@@ -4,17 +4,39 @@ import com.example.scheduler.models.UserDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Function;
 
 @Service
-public class JWTUtil {
+public class JwtUtil {
+    private Properties prop;
+    private String SECRET_KEY;
 
-    private String SECRET_KEY = "secret";
+    public JwtUtil() {
+        this.prop = new Properties();
+        try {
+            FileInputStream fis = new FileInputStream("src/main/resources/application.properties");
+            prop.load(fis);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.SECRET_KEY = prop.getProperty("SECRET_KEY");
+
+    }
+
+
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -24,17 +46,17 @@ public class JWTUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private String generateToken(UserDetail userDetail) {
+    public String generateToken(UserDetails userDetail) {
         Map<String, Object> claims = new HashMap<>();
         return  createToken(claims, userDetail.getUsername());
         
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)).signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
@@ -48,7 +70,7 @@ public class JWTUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    public Boolean isTokenValid(String token, UserDetail userDetail) {
+    public Boolean isTokenValid(String token, UserDetails userDetail) {
         final String username = extractUsername(token);
         return (username.equals(userDetail.getUsername()) && !isTokenExpired(token));
     }

@@ -4,15 +4,12 @@ package com.example.scheduler.controllers;
 import com.example.scheduler.models.User;
 import com.example.scheduler.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.bind.annotation.*;
-
-import java.rmi.ServerException;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -28,9 +25,11 @@ public class UserController {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
-    @GetMapping("/auth")
-    public void auth() {
-
+    @GetMapping("/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        User user = userService.getUserByUsername(username).get();
+        System.out.println(user);
+       return  user;
     }
 
 //    @PostMapping("/add")
