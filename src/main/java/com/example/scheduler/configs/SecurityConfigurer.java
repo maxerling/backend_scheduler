@@ -28,7 +28,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(UserDetailsService);
+        auth.userDetailsService(UserDetailsService).passwordEncoder(passwordEncoder());
     }
 
 
@@ -41,28 +41,31 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .permitAll()
                .anyRequest()
                .authenticated();*/
-        http.cors();
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/scheduler").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/").authenticated()
-                .antMatchers("/auth").permitAll().anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.cors();
+//        http.csrf().disable().authorizeRequests()
+//                .antMatchers("/admin").hasRole("ADMIN")
+//                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/scheduler").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/").authenticated()
+//                .antMatchers("/auth").permitAll().anyRequest().authenticated()
+//                .and().sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 //                .and()
 //                .formLogin()
 //                .loginPage("/login").permitAll();
-//
+
+        http.authorizeRequests().anyRequest().authenticated();
+        http.formLogin();
+        http.httpBasic();
 
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Override

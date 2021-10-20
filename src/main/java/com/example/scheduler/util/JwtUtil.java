@@ -1,6 +1,5 @@
 package com.example.scheduler.util;
 
-import com.example.scheduler.models.UserDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

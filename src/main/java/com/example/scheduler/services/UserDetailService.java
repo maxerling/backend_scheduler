@@ -1,7 +1,6 @@
 package com.example.scheduler.services;
 
 import com.example.scheduler.models.User;
-import com.example.scheduler.models.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,9 +17,9 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-         Optional<User> user = userService.getUserByUsername(username);
+        User user = userService.getUserByUsername(username).get();
 
-         return new UserDetail(user.get());
+         return new User(user.getUsername(),user.getPassword(),user.getFirstName(), user.getLastName(),user.getAuthorities(),user.isEnabled());
 
     }
 

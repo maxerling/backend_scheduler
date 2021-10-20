@@ -34,6 +34,10 @@ public class UserController {
 
 //    @PostMapping("/add")
 //    public ResponseEntity<User> addUser(@RequestParam String username, @RequestParam String password, @RequestParam(required = false) String role) {
-//        return ResponseEntity.ok(userService.addUser(username, password, role));
+//        User newUser = new User();
+//        newUser.setUsername(username);
+//        newUser.setPassword(password);
+//        newUser.setRole(role);
+//        return ResponseEntity.ok(userService.addUser(newUser));
 //    }
 }

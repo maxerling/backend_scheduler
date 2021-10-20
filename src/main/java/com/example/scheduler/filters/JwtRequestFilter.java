@@ -1,6 +1,6 @@
 package com.example.scheduler.filters;
 
-import com.example.scheduler.models.UserDetail;
+
 import com.example.scheduler.services.UserDetailService;
 import com.example.scheduler.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

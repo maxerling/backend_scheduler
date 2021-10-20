@@ -1,39 +1,62 @@
 package com.example.scheduler.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 //@Table(name = "users")
-public class User {
-
-    public User() {}
+public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String first_name;
-    private String last_name;
-    private String role;
-    private boolean active;
+    private String firstName;
+    private String lastName;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
+    private List<Authority> authorities;
+    private boolean enabled;
     @OneToMany(mappedBy = "user")
     private List<BookedAppointment> bookedAppointments;
 
-    public Long getId() {
-        return id;
+
+    public User(String username, String password, String firstName, String lastName, List<Authority> authorities, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authorities = authorities;
+        this.enabled = enabled;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public User() {}
+
+
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enabled;
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setUsername(String username) {
@@ -48,20 +71,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<BookedAppointment> getBookedAppointments() {
@@ -72,19 +95,27 @@ public class User {
         this.bookedAppointments = bookedAppointments;
     }
 
-    public String getRole() {
-        return role;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public List<Authority> getAuthorities() {
+        return authorities;
     }
 
-    public boolean isActive() {
-        return active;
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
