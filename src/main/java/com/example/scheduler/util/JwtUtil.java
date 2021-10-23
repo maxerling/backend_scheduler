@@ -18,7 +18,9 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
     private Properties prop;
-    private String SECRET_KEY;
+    private final String SECRET_KEY;
+    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
+    private final int EXPIRES_IN = 60*45;
 
     public JwtUtil() {
         this.prop = new Properties();
@@ -57,7 +59,12 @@ public class JwtUtil {
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)).signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+                .setExpiration(generateExpirationDate()).signWith(SIGNATURE_ALGORITHM, SECRET_KEY).compact();
+    }
+
+    private Date generateExpirationDate() {
+
+        return new Date(new Date().getTime() + EXPIRES_IN * 1000);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

@@ -2,6 +2,7 @@ package com.example.scheduler.configs;
 
 import com.example.scheduler.filters.JwtRequestFilter;
 import com.example.scheduler.services.UserDetailService;
+import com.example.scheduler.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +25,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     UserDetailService UserDetailsService;
 
     @Autowired
-    JwtRequestFilter jwtRequestFilter;
+    JwtUtil jwtUtil;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -56,10 +57,26 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .formLogin()
 //                .loginPage("/login").permitAll();
 
-        http.authorizeRequests().anyRequest().authenticated();
-        http.formLogin();
-        http.httpBasic();
 
+        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests((request) -> request.antMatchers("/user").hasRole("USER")
+                                .antMatchers("/admin").hasRole("ADMIN")
+                                .antMatchers("/").permitAll()
+                                .antMatchers("/auth").permitAll()
+                                .anyRequest().authenticated())
+                .addFilterBefore(new JwtRequestFilter(UserDetailsService,jwtUtil),UsernamePasswordAuthenticationFilter.class);
+        //http.formLogin();
+
+//        http.cors();
+//        http.csrf().disable().headers().frameOptions().disable();
+
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+//                .authenticationEntryPoint(authenticationEntryPoint).and()
+//                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/api/v1/auth/login").permitAll()
+//                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
+//                .addFilterBefore(new JWTAuthenticationFilter(userService, jWTTokenHelper),
+//                        UsernamePasswordAuthenticationFilter.class);
 
     }
 

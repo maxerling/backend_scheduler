@@ -28,18 +28,18 @@ public class SchedulerApplication {
     protected void init() {
         List<Authority> authorities = new ArrayList<>();
 
-        authorities.add(new Authority("user","ROLE_USER"));
-        authorities.add(new Authority("admin","ROLE_ADMIN"));
 
+        authorities.add(new Authority("ROLE_USER","role user"));
+        authorities.add(new Authority("ROLE_ADMIN","role admin"));
         User user = new User();
         //user.setId(10L);
-        user.setUsername("user1");
+        user.setUsername("user1"); 
         user.setPassword("user1");
         user.setFirstName("Ash");
         user.setLastName("Ketchum");
         user.setAuthorities(authorities);
         user.setEnabled(true);
-        userService.addUser(user);
+        //userService.addUser(user);
     }
 
 }
