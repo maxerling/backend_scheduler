@@ -33,7 +33,7 @@ public class JwtUtil {
             e.printStackTrace();
         }
 
-        this.SECRET_KEY = prop.getProperty("SECRET_KEY");
+        this.SECRET_KEY = "secret";
 
     }
 
@@ -59,7 +59,7 @@ public class JwtUtil {
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(generateExpirationDate()).signWith(SIGNATURE_ALGORITHM, SECRET_KEY).compact();
+                .setExpiration(generateExpirationDate()).signWith(SIGNATURE_ALGORITHM, "secret").compact();
     }
 
     private Date generateExpirationDate() {

@@ -1,7 +1,7 @@
 package com.example.scheduler.controllers;
 
-import com.example.scheduler.models.AuthenticationRequest;
-import com.example.scheduler.models.AuthenticationResponse;
+import com.example.scheduler.controllers.DTO.AuthenticationRequest;
+import com.example.scheduler.controllers.DTO.AuthenticationResponse;
 import com.example.scheduler.services.UserDetailService;
 import com.example.scheduler.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +25,10 @@ public class HomeController {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    @GetMapping("/user")
-    @ResponseBody
-    public String user() {
-        return "<h1>Welcome user</h1>";
-    }
-
-    @GetMapping("/admin")
-    @ResponseBody
-    public String admin() {
-        return "<h1>Welcome admin</h1>";
-    }
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        System.out.println("auth");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {

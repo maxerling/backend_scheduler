@@ -1,4 +1,4 @@
-package com.example.scheduler.models;
+package com.example.scheduler.controllers.DTO;
 
 public class AuthenticationResponse {
     private final String jwt;

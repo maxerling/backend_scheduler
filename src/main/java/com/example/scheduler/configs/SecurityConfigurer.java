@@ -57,15 +57,23 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .formLogin()
 //                .loginPage("/login").permitAll();
 
-
+        http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests((request) -> request.antMatchers("/user").hasRole("USER")
-                                .antMatchers("/admin").hasRole("ADMIN")
-                                .antMatchers("/").permitAll()
-                                .antMatchers("/auth").permitAll()
-                                .anyRequest().authenticated())
+                        .antMatchers("/scheduler").hasRole("USER")
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .antMatchers("/").permitAll()
+                        .antMatchers("/login").permitAll()
+                        .antMatchers("/auth").permitAll()
+                        .anyRequest().authenticated().and()
+                )
                 .addFilterBefore(new JwtRequestFilter(UserDetailsService,jwtUtil),UsernamePasswordAuthenticationFilter.class);
+//        http.formLogin()
+//                .loginPage("/login")
+//                .loginProcessingUrl("/auth")
+//                .defaultSuccessUrl("/scheduler.html")
+//                .failureUrl("/login.html?error=true");
         //http.formLogin();
 
 //        http.cors();

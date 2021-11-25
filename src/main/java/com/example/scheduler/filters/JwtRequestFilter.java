@@ -3,6 +3,7 @@ package com.example.scheduler.filters;
 
 import com.example.scheduler.services.UserDetailService;
 import com.example.scheduler.util.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,8 +38,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            try {
             jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+            username = jwtUtil.extractUsername(jwt);} catch (ExpiredJwtException e) {
+                e.printStackTrace();
+            }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -1,6 +1,7 @@
 package com.example.scheduler.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -21,8 +22,9 @@ public class User implements UserDetails {
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
     private List<Authority> authorities;
     private boolean enabled;
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private List<BookedAppointment> bookedAppointments;
+    private List<Event> bookedAppointments;
 
 
     public User(String username, String password, String firstName, String lastName, List<Authority> authorities, boolean enabled) {
@@ -87,11 +89,11 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public List<BookedAppointment> getBookedAppointments() {
+    public List<Event> getBookedAppointments() {
         return bookedAppointments;
     }
 
-    public void setBookedAppointments(List<BookedAppointment> bookedAppointments) {
+    public void setBookedAppointments(List<Event> bookedAppointments) {
         this.bookedAppointments = bookedAppointments;
     }
 
@@ -118,4 +120,6 @@ public class User implements UserDetails {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+
 }
