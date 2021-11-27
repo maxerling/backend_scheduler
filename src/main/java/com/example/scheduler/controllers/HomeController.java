@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +32,17 @@ public class HomeController {
         System.out.println("auth");
         System.out.println(authenticationRequest.getUsername());
         System.out.println(authenticationRequest.getPassword());
-//        try {
-//            System.out.println("try");
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-//        } catch (BadCredentialsException e) {
-//            System.out.println("catch");
-//            throw  new Exception("Incorrect username or password", e);
-//        }
+        Authentication principal;
+        try {
+            System.out.println("try");
+            principal = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        } catch (BadCredentialsException e) {
+            System.out.println("catch");
+            throw  new Exception("Incorrect username or password", e);
+        }
+        System.out.println("cred " + principal.getCredentials());
+        System.out.println("principal " + principal.getPrincipal());
+        System.out.println("details " + principal.getDetails());
         System.out.println("after");
         final UserDetails userDetails  = userDetailService.loadUserByUsername(authenticationRequest.getUsername());
         System.out.println("userdetails: " + userDetails);
