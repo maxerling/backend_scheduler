@@ -13,7 +13,6 @@ import java.util.List;
 public class User implements UserDetails {
 
 
-    static final List<Authority> DEFAULT_AUTHORITIES = new ArrayList<>();
     static final boolean DEFAULT_ENABLED = true;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +29,9 @@ public class User implements UserDetails {
 
 
     public User(String username, String password, List<Authority> authorities, boolean enabled) {
+        if (authorities.size() == 0 ) {
+            authorities.add(new Authority("ROLE_USER","role user"));
+        }
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -38,10 +40,10 @@ public class User implements UserDetails {
     }
 
     public User(String username, String password) {
-        this(username,password,DEFAULT_AUTHORITIES ,DEFAULT_ENABLED);
+        this(username,password,new ArrayList<>(),DEFAULT_ENABLED);
     }
 
-    public User() {DEFAULT_AUTHORITIES.add(new Authority("ROLE_USER","role user"));}
+    public User() {}
 
 
 
