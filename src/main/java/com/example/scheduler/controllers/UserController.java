@@ -22,7 +22,6 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Object> addUser(@RequestBody User user) {
-        System.out.println(user.getUsername() + "|" + user.getPassword());
         try {
            return ResponseEntity.ok(userService.addUser(new User(user.getUsername(),user.getPassword())));
         } catch (Exception e){
