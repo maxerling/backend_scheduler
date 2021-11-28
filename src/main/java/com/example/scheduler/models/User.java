@@ -5,19 +5,21 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
 
+
+    static final List<Authority> DEFAULT_AUTHORITIES = new ArrayList<>();
+    static final boolean DEFAULT_ENABLED = true;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String firstName;
-    private String lastName;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
     private List<Authority> authorities;
@@ -27,13 +29,17 @@ public class User implements UserDetails {
     private List<Event> bookedAppointments;
 
 
-    public User(String username, String password, String firstName, String lastName, List<Authority> authorities, boolean enabled) {
+    public User(String username, String password, List<Authority> authorities, boolean enabled) {
+        DEFAULT_AUTHORITIES.add(new Authority("ROLE_USER","role user"));
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.authorities = authorities;
         this.enabled = enabled;
+        this.bookedAppointments = new ArrayList<>();
+    }
+
+    public User(String username, String password) {
+        this(username,password,DEFAULT_AUTHORITIES ,DEFAULT_ENABLED);
     }
 
     public User() {}
@@ -61,6 +67,8 @@ public class User implements UserDetails {
         return enabled;
     }
 
+
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -73,21 +81,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public List<Event> getBookedAppointments() {
         return bookedAppointments;

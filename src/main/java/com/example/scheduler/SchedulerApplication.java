@@ -35,8 +35,6 @@ public class SchedulerApplication {
         //user.setId(10L);
         user.setUsername("user1"); 
         user.setPassword("user1");
-        user.setFirstName("Ash");
-        user.setLastName("Ketchum");
         user.setAuthorities(authorities);
         user.setEnabled(true);
         //userService.addUser(user);
