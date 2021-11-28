@@ -33,7 +33,8 @@ public class JwtUtil {
             e.printStackTrace();
         }
 
-        this.SECRET_KEY = "secret";
+        this.SECRET_KEY = prop.getProperty("SECRET_KEY");
+        System.out.println(this.SECRET_KEY);
 
     }
 
