@@ -46,10 +46,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/user/add").permitAll()
 //                .antMatchers("/user/all").permitAll()
 //                .antMatchers("/auth").permitAll().anyRequest().authenticated()
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+//                .and()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
