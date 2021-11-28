@@ -21,10 +21,10 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addUser(@RequestBody String username, String password) {
-        System.out.println(username + "|" + password);
+    public ResponseEntity<Object> addUser(@RequestBody User user) {
+        System.out.println(user.getUsername() + "|" + user.getPassword());
         try {
-           return ResponseEntity.ok(userService.addUser(new User(username,password)));
+           return ResponseEntity.ok(userService.addUser(new User(user.getUsername(),user.getPassword())));
         } catch (Exception e){
             return ResponseEntity.badRequest().body("user couldn't be saved");
         }
