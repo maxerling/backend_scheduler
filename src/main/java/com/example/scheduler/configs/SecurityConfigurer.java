@@ -38,7 +38,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.cors();
-        http.csrf().disable().authorizeRequests().antMatchers("/users**").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll()
 //                .antMatchers("/user").hasRole("USER")
 //                .antMatchers("/scheduler").hasRole("USER")
 //                .antMatchers("/").permitAll()
@@ -53,7 +53,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-
+        http.addFilterBefore(new JwtRequestFilter(UserDetailsService,jwtUtil),UsernamePasswordAuthenticationFilter.class);
 
 //        http.cors();
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
