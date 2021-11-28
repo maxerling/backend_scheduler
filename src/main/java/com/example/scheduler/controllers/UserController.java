@@ -25,6 +25,7 @@ public class UserController {
         try {
            return ResponseEntity.ok(userService.addUser(new User(user.getUsername(),user.getPassword())));
         } catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("user couldn't be saved");
         }
     }
