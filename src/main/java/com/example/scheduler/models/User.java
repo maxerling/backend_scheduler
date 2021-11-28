@@ -30,7 +30,6 @@ public class User implements UserDetails {
 
 
     public User(String username, String password, List<Authority> authorities, boolean enabled) {
-        DEFAULT_AUTHORITIES.add(new Authority("ROLE_USER","role user"));
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -42,7 +41,7 @@ public class User implements UserDetails {
         this(username,password,DEFAULT_AUTHORITIES ,DEFAULT_ENABLED);
     }
 
-    public User() {}
+    public User() {DEFAULT_AUTHORITIES.add(new Authority("ROLE_USER","role user"));}
 
 
 
@@ -116,7 +115,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    
+
 
 
 }

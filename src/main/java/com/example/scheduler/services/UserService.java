@@ -15,7 +15,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public Iterable<User> getAllUsers() {
-       return userRepository.findAll();
+        Iterable<User>  allUsers = userRepository.findAll();
+        System.out.println(allUsers);
+       return allUsers;
     }
 
     public Optional<User> getUserByUsername(String username) {
