@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Object> addUser(@RequestBody String username, String password) {
-        System.out.println(username + " " + password);
+        System.out.println(username + "|" + password);
         try {
            return ResponseEntity.ok(userService.addUser(new User(username,password)));
         } catch (Exception e){
