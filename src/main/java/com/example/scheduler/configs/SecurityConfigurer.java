@@ -96,7 +96,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
         @Override
             public void addCorsMappings(CorsRegistry corsRegistry) {
-            corsRegistry.addMapping("/*").allowedOrigins("*");
+            corsRegistry.addMapping("/*").allowedOrigins("https://maxerling.github.io");
         }
         };
     }
