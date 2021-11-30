@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @JoinTable(name= "user_authoritites",
             joinColumns = {
             @JoinColumn( name = "user_id", referencedColumnName = "id")}
-            ,inverseJoinColumns = {@JoinColumn(referencedColumnName ="authority_id")})
+            ,inverseJoinColumns = {@JoinColumn(name ="authority_id",referencedColumnName = "id"  ),  })
     private List<Authority> authorities;
     private boolean enabled;
     @JsonManagedReference
