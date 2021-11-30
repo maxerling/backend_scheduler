@@ -17,7 +17,7 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getUserByUsername(username).get();
 
-         return new User(user.getUsername(),user.getPassword(),user.getAuthorities(),user.isEnabled());
+         return new User(user.getUsername(),user.getFirstName(),user.getPassword(),user.getAuthorities(),user.isEnabled());
 
     }
 
