@@ -47,11 +47,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/users").hasRole("USER")
-                .antMatchers("/users/*").hasRole("USER")
                 .antMatchers("/scheduler").hasRole("USER")
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/users/add").permitAll()
+                .antMatchers("/users/user1").permitAll()
                 .antMatchers("/auth").permitAll()
                 .and()
                 .authorizeRequests()
