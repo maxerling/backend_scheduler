@@ -122,4 +122,17 @@ public class User implements UserDetails {
     public String getFirstName() {
         return firstName;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", authorities=" + authorities +
+                ", enabled=" + enabled +
+                ", bookedAppointments=" + bookedAppointments +
+                '}';
+    }
 }
