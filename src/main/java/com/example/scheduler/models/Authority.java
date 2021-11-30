@@ -21,7 +21,7 @@ public class Authority implements GrantedAuthority {
     private String roleCode;
     private String roleDescription;
     @ManyToMany(mappedBy = "authority", fetch = FetchType.LAZY)
-    private Set<User> students = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     public Authority() {
 
@@ -56,8 +56,8 @@ public class Authority implements GrantedAuthority {
         this.roleDescription = roleDescription;
     }
 
-    public Set<User> getStudents() {
-        return students;
+    public Set<User> getUsers() {
+        return users;
     }
 }
 

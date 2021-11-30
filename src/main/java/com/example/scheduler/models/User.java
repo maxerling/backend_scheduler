@@ -25,28 +25,27 @@ public class User implements UserDetails {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name= "user_authoritites",
             joinColumns = {
-            @JoinColumn( name = "user_id", referencedColumnName = "id")}
+                    @JoinColumn( name = "user_id", referencedColumnName = "id")}
             ,inverseJoinColumns = {@JoinColumn(name ="authority_id",referencedColumnName = "id"  ),  })
-    private List<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
     private boolean enabled;
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private Set<Event> bookedAppointments = new HashSet<>();
+    private List<Event> bookedAppointments = new ArrayList<>();
 
 
-    public User(String username, String firstName,String password, List<Authority> authorities, boolean enabled) {
+    public User(String username, String firstName,String password, boolean enabled) {
         if (authorities.size() == 0 ) {
             authorities.add(new Authority("ROLE_USER","role user"));
         }
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
         this.enabled = enabled;
         this.firstName = firstName;
     }
 
     public User(String username, String firstName, String password) {
-        this(username,firstName,password,new ArrayList<>(),DEFAULT_ENABLED);
+        this(username,firstName,password,DEFAULT_ENABLED);
     }
 
     public User() {}
@@ -89,20 +88,23 @@ public class User implements UserDetails {
     }
 
 
-    public Set<Event> getBookedAppointments() {
+
+
+    public List<Event> getBookedAppointments() {
         return bookedAppointments;
+    }
+
+    public void setBookedAppointments(List<Event> bookedAppointments) {
+        this.bookedAppointments = bookedAppointments;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public List<Authority> getAuthorities() {
+    @Override
+    public Set<Authority> getAuthorities() {
         return authorities;
-    }
-
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     public Long getId() {
