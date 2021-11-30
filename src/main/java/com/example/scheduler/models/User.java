@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,13 +22,16 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String firstName;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name= "user_authoritites",
+            joinColumns = {
+            @JoinColumn( name = "user_id", referencedColumnName = "id")}
+            ,inverseJoinColumns = {@JoinColumn(referencedColumnName ="authority_id")})
     private List<Authority> authorities;
     private boolean enabled;
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private List<Event> bookedAppointments;
+    private Set<Event> bookedAppointments = new HashSet<>();
 
 
     public User(String username, String firstName,String password, List<Authority> authorities, boolean enabled) {
@@ -37,7 +42,6 @@ public class User implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
-        this.bookedAppointments = new ArrayList<>();
         this.firstName = firstName;
     }
 
@@ -85,14 +89,8 @@ public class User implements UserDetails {
     }
 
 
-
-
-    public List<Event> getBookedAppointments() {
+    public Set<Event> getBookedAppointments() {
         return bookedAppointments;
-    }
-
-    public void setBookedAppointments(List<Event> bookedAppointments) {
-        this.bookedAppointments = bookedAppointments;
     }
 
     public String getUsername() {

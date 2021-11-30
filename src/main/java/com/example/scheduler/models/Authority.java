@@ -3,10 +3,10 @@ package com.example.scheduler.models;
 import org.springframework.security.core.GrantedAuthority;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Authority implements GrantedAuthority {
 
@@ -20,6 +20,8 @@ public class Authority implements GrantedAuthority {
     private Long id;
     private String roleCode;
     private String roleDescription;
+    @ManyToMany(mappedBy = "authority", fetch = FetchType.LAZY)
+    private Set<User> students = new HashSet<>();
 
     public Authority() {
 
@@ -52,6 +54,10 @@ public class Authority implements GrantedAuthority {
 
     public void setRoleDescription(String roleDescription) {
         this.roleDescription = roleDescription;
+    }
+
+    public Set<User> getStudents() {
+        return students;
     }
 }
 
