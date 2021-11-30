@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<Object> addUser(@RequestBody User user) {
         try {
-           return ResponseEntity.ok(userService.addUser(new User(user.getUsername(),user.getPassword())));
+           return ResponseEntity.ok(userService.addUser(new User(user.getUsername(),user.getFirstName(),user.getPassword())));
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("user couldn't be saved");

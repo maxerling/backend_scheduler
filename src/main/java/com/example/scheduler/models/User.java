@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private List<Event> bookedAppointments;
 
 
-    public User(String username, String password, List<Authority> authorities, boolean enabled) {
+    public User(String username, String firstName,String password, List<Authority> authorities, boolean enabled) {
         if (authorities.size() == 0 ) {
             authorities.add(new Authority("ROLE_USER","role user"));
         }
@@ -38,10 +38,11 @@ public class User implements UserDetails {
         this.authorities = authorities;
         this.enabled = enabled;
         this.bookedAppointments = new ArrayList<>();
+        this.firstName = firstName;
     }
 
-    public User(String username, String password) {
-        this(username,password,new ArrayList<>(),DEFAULT_ENABLED);
+    public User(String username, String firstName, String password) {
+        this(username,firstName,password,new ArrayList<>(),DEFAULT_ENABLED);
     }
 
     public User() {}
