@@ -19,6 +19,7 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String firstName;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
     private List<Authority> authorities;
@@ -117,7 +118,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-
-
-
+    public String getFirstName() {
+        return firstName;
+    }
 }
