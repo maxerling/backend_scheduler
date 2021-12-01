@@ -101,7 +101,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             corsRegistry.addMapping("/**")
                     .allowedMethods("GET","POST","PUT","DELETE")
                     .allowedHeaders("*")
-                    .allowedHeaders("*");
+                    .allowedOrigins("*");
 
         }
         };
