@@ -45,40 +45,21 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.cors();
-        http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll()
-//                .antMatchers("/scheduler").hasRole("USER")
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/login").permitAll()
-//                .antMatchers("/users/add").permitAll()
-//                .antMatchers("/users/user1").permitAll()
-//                .antMatchers("/users/**").permitAll()
-//                .antMatchers("/users/*").permitAll()
-//                .antMatchers("/auth").permitAll()
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/scheduler").hasRole("USER")
+                .antMatchers("/users/*").hasRole("USER")
+                .antMatchers("/events/**").hasRole("USER")
+                .antMatchers("/users/add").permitAll()
+                .antMatchers("/auth").permitAll()
+                .antMatchers("/").permitAll()
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(new JwtRequestFilter(UserDetailsService,jwtUtil),UsernamePasswordAuthenticationFilter.class);
-
-//        http.cors();
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .csrf().disable().authorizeRequests((request) ->
-//                        request
-//
-//                                .antMatchers("/user").hasRole("USER")
-//                        .antMatchers("/scheduler").hasRole("USER")
-//                        .antMatchers("/admin").hasRole("ADMIN")
-//                        .antMatchers("/").permitAll()
-//                        .antMatchers("/login").permitAll()
-//                        .antMatchers("/auth").permitAll()
-//                        .antMatchers("/user/add").permitAll()
-//                        .anyRequest()
-//                )
-//                .addFilterBefore(new JwtRequestFilter(UserDetailsService,jwtUtil),UsernamePasswordAuthenticationFilter.class);
-
 
     }
 

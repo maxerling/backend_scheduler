@@ -14,6 +14,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthorityService authorityService;
+
     public Iterable<User> getAllUsers() {
         Iterable<User>  allUsers = userRepository.findAll();
         System.out.println(allUsers);
@@ -26,6 +29,7 @@ public class UserService {
 
     public User addUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setAuthorities(authorityService.getAllRoles());
         return userRepository.save(user);
     }
 

@@ -22,22 +22,18 @@ public class User implements UserDetails {
     private String firstName;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))
-    private List<Authority> authorities;
+    private List<Authority> authorities = new ArrayList<>();
     private boolean enabled;
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private List<Event> bookedAppointments;
+    private List<Event> bookedAppointments = new ArrayList<>();
 
 
     public User(String username, String firstName,String password, List<Authority> authorities, boolean enabled) {
-        if (authorities.size() == 0 ) {
-            authorities.add(new Authority("ROLE_USER","role user"));
-        }
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
-        this.bookedAppointments = new ArrayList<>();
         this.firstName = firstName;
     }
 

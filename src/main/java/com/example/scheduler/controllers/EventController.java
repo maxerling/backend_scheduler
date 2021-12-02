@@ -1,22 +1,14 @@
 package com.example.scheduler.controllers;
 
 
-import com.example.scheduler.expection.OverlappingInfoException;
 import com.example.scheduler.models.Event;
 import com.example.scheduler.services.EventService;
-import com.example.scheduler.util.DateFormater;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/events")
