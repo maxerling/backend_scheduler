@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorityRepository extends CrudRepository<Authority,Long> {
+    Authority findAuthorityByRoleCode(String roleCode);
 }

@@ -18,4 +18,8 @@ public class AuthorityService {
     public Authority addRole(Authority authority) {
         return authorityRepository.save(authority);
     }
+
+    public Authority getRole(String roleCode) {
+       return authorityRepository.findAuthorityByRoleCode(roleCode);
+    }
 }

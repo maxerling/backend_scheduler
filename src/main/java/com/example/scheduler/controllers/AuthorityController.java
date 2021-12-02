@@ -21,6 +21,7 @@ public class AuthorityController {
 
     @PostMapping("/add")
     public String addRole(@RequestBody Authority authority) {
+        System.out.println("!! " + authority);
         String response = "ok";
        Authority savedAuthority = authorityService.addRole(authority);
        if (savedAuthority == null) {

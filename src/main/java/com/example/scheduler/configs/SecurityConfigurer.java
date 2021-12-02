@@ -52,6 +52,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/scheduler").hasRole("USER")
                 .antMatchers("/users/*").hasRole("USER")
                 .antMatchers("/events/**").hasRole("USER")
+                .antMatchers("/roles/**").hasRole("USER")
                 .and()
                 .authorizeRequests()
                 .anyRequest()

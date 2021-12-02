@@ -53,6 +53,15 @@ public class Authority implements GrantedAuthority {
     public void setRoleDescription(String roleDescription) {
         this.roleDescription = roleDescription;
     }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "id=" + id +
+                ", roleCode='" + roleCode + '\'' +
+                ", roleDescription='" + roleDescription + '\'' +
+                '}';
+    }
 }
 
 

@@ -33,10 +33,12 @@ public class UserService {
     public User addUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         List<Authority> roles = new ArrayList<>();
-        authorityService.getAllRoles().forEach(r -> roles.add(r));
+        roles.add(authorityService.getRole("ROLE_USER"));
         user.setAuthorities(roles);
         return userRepository.save(user);
     }
+
+
 
 
 
