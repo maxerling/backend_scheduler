@@ -45,7 +45,7 @@ public class EventService {
         }
 
 
-        Event savedEvent = eventRepository.save(newEvent);
+        Event savedEvent = eventRepository.save(event);
         System.out.println("savedEvent " + savedEvent);
         return savedEvent;
     }
