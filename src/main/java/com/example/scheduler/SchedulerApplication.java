@@ -21,16 +21,6 @@ public class SchedulerApplication {
 
     }
 
-
-    @Autowired
-    private AuthorityService authorityService;
-
-    @PostConstruct
-    protected void init() {
-        authorityService.addRole(new Authority("ROLE_USER","role user"));
-        authorityService.addRole(new Authority("ROLE_ADMIN","role admin"));
-    }
-
 }
 
 
