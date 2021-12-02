@@ -1,11 +1,14 @@
 package com.example.scheduler.services;
 
+import com.example.scheduler.models.Authority;
 import com.example.scheduler.models.User;
 import com.example.scheduler.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +32,9 @@ public class UserService {
 
     public User addUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        user.setAuthorities(authorityService.getAllRoles());
+        List<Authority> roles = new ArrayList<>();
+        authorityService.getAllRoles().forEach(r -> roles.add(r));
+        user.setAuthorities(roles);
         return userRepository.save(user);
     }
 

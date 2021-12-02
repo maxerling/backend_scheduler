@@ -14,7 +14,7 @@ public class AuthorityController {
     private AuthorityService authorityService;
 
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public Iterable<Authority> getAllRoles() {
         return authorityService.getAllRoles();
     }
