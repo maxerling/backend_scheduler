@@ -19,7 +19,8 @@ public class Event {
     private String endTime;
     private String date;
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name ="user_id", nullable = false)
     private User user;
 
 

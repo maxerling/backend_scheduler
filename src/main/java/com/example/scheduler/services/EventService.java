@@ -27,26 +27,19 @@ public class EventService {
         return eventRepository.findAll();
     }
     public Event saveEvent(Event event) {
-        System.out.println("event " + event);
-        Event newEvent = null;
+
         User user = userRepository.findById(event.getUser().getId()).orElseThrow(() -> new RuntimeException("user not found"));;
         System.out.println("user: " + user);
         event.setUser(user);
-        user.getBookedAppointments().add(event);
-        newEvent = new Event(event.getName(),event.getDescription(), event.getStartTime(), event.getEndTime(), event.getDate(),new User());
+        System.out.println("event " + event);
 
-
-
-
-        List<Event> eventsThatDate = getEventsBasedOnDate(newEvent.getDate());
-        List<Event> overlappingEvents = calculateOverlappingEvents(newEvent,eventsThatDate);
-
-
+        List<Event> eventsThatDate = getEventsBasedOnDate(event.getDate());
+        List<Event> overlappingEvents = calculateOverlappingEvents(event,eventsThatDate);
         if (overlappingEvents.size() > 0) {
             throw new OverlappingInfoException("Overlapping date & time, try agin!");
         }
-        User savedUser= userRepository.save(user);
-        System.out.println("savedUser " + savedUser);
+
+
         Event savedEvent = eventRepository.save(event);
         System.out.println("savedEvent " + savedEvent);
         return savedEvent;
