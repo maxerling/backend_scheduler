@@ -30,6 +30,7 @@ public class EventService {
 
         Event newEvent = null;
         User user = userRepository.findById(event.getUser().getId()).get();
+        System.out.println("user: " + user);
         newEvent = new Event(event.getName(),event.getDescription(), event.getStartTime(), event.getEndTime(), event.getDate(), user);
 
 
@@ -44,9 +45,9 @@ public class EventService {
         }
 
 
-
-
-        return eventRepository.save(newEvent);
+        Event savedEvent = eventRepository.save(newEvent);
+        System.out.println("savedEvent " + savedEvent);
+        return savedEvent;
     }
 
     public List<Event> getEventsBasedOnDate(String date) {
