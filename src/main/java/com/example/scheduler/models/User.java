@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -29,16 +31,17 @@ public class User implements UserDetails {
     private List<Event> bookedAppointments = new ArrayList<>();
 
 
+
     public User(String username, String firstName,String password, List<Authority> authorities, boolean enabled) {
+
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
         this.enabled = enabled;
         this.firstName = firstName;
     }
 
     public User(String username, String firstName, String password) {
-        this(username,firstName,password,new ArrayList<>(),DEFAULT_ENABLED);
+        this(username,firstName,password,DEFAULT_ENABLED);
     }
 
     public User() {}
@@ -95,12 +98,9 @@ public class User implements UserDetails {
         return username;
     }
 
-    public List<Authority> getAuthorities() {
+    @Override
+    public Set<Authority> getAuthorities() {
         return authorities;
-    }
-
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     public Long getId() {
