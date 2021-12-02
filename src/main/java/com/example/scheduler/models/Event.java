@@ -98,7 +98,6 @@ public class Event {
                 ", start_time='" + startTime + '\'' +
                 ", end_time='" + endTime + '\'' +
                 ", date='" + date + '\'' +
-                ", user=" + user +
                 '}';
     }
 }
