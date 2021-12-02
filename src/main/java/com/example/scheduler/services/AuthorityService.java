@@ -5,7 +5,6 @@ import com.example.scheduler.repositories.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public class AuthorityService {
 
@@ -13,8 +12,8 @@ public class AuthorityService {
     private AuthorityRepository authorityRepository;
 
 
-    public List<Authority> getAllRoles() {
-        return (List<Authority>) authorityRepository.findAll();
+    public Iterable<Authority> getAllRoles() {
+        return authorityRepository.findAll();
     }
     public Authority addRole(Authority authority) {
         return authorityRepository.save(authority);

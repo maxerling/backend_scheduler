@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
 @Controller("/roles/")
 public class AuthorityController {
     @Autowired
@@ -17,7 +15,7 @@ public class AuthorityController {
 
 
     @GetMapping("/")
-    public List<Authority> getAllRoles() {
+    public Iterable<Authority> getAllRoles() {
         return authorityService.getAllRoles();
     }
 
